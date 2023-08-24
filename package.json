@@ -1,0 +1,258 @@
+{
+  "name": "tutel-support",
+  "displayName": "Tutel",
+  "description": "Support for coding in Tutel programming language",
+  "version": "1.0.0",
+  "publisher": "Bartosz Sosnowski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab-stud.elka.pw.edu.pl/sosnowski-inz/tutel-support.git"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Other",
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onCommand:tutel.start",
+    "onWebviewPanel:tutel",
+    "onDebug",
+    "onCommand:extension.tutel.getProgramName"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "tutel",
+        "aliases": [
+          "Tutel",
+          "tutel"
+        ],
+        "extensions": [
+          ".tut"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tutel",
+        "scopeName": "source.tutel",
+        "path": "./syntaxes/tutel.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "tutel",
+        "path": "./snippets/tutel.snippets.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "extension.tutel.runEditorContents",
+        "title": "Run File",
+        "category": "Tutel",
+        "enablement": "!inDebugMode",
+        "icon": "$(play)"
+      },
+      {
+        "command": "extension.tutel.debugEditorContents",
+        "title": "Debug File",
+        "category": "Mock Debug",
+        "enablement": "!inDebugMode",
+        "icon": "$(debug-alt)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "extension.tutel.runEditorContents",
+          "when": "resourceLangId == tutel",
+          "group": "navigation@1"
+        },
+        {
+          "command": "extension.tutel.debugEditorContents",
+          "when": "resourceLangId == tutel",
+          "group": "navigation@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "extension.tutel.debugEditorContents",
+          "when": "resourceLangId == tutel"
+        },
+        {
+          "command": "extension.tutel.runEditorContents",
+          "when": "resourceLangId == tutel"
+        }
+      ]
+    },
+    "breakpoints": [
+      {
+        "language": "tutel"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "tutel",
+        "languages": [
+          "tutel"
+        ],
+        "label": "Tutel",
+        "program": "-m tutel --vscode --debug -f test.tut",
+        "runtime": "python",
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Absolute path to a tutel code file.",
+                "default": "${workspaceFolder}/${command:AskForProgramName}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after launch.",
+                "default": true
+              },
+              "trace": {
+                "type": "boolean",
+                "description": "Enable logging of the Debug Adapter Protocol.",
+                "default": true
+              },
+              "compileError": {
+                "type": "string",
+                "description": "Simulates a compile error in 'launch' request.",
+                "enum": [
+                  "default",
+                  "show",
+                  "hide"
+                ],
+                "enumDescriptions": [
+                  "default: show fake compile error to user",
+                  "show fake compile error to user",
+                  "do not show fake compile error to user"
+                ]
+              }
+            }
+          },
+          "attach": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Absolute path to a tutel code file.",
+                "default": "${workspaceFolder}/${command:AskForProgramName}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after attach.",
+                "default": true
+              },
+              "trace": {
+                "type": "boolean",
+                "description": "Enable logging of the Debug Adapter Protocol.",
+                "default": true
+              },
+              "compileError": {
+                "type": "string",
+                "description": "Simulates a compile error in 'attach' request.",
+                "enum": [
+                  "default",
+                  "show",
+                  "hide"
+                ],
+                "enumDescriptions": [
+                  "default: show fake compile error to user",
+                  "show fake compile error to user",
+                  "do not show fake compile error to user"
+                ]
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "tutel",
+            "name": "Launch",
+            "request": "launch",
+            "program": "${file}",
+            "stopOnEntry": true
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Tutel Debug: Launch",
+            "description": "A new configuration for 'debugging' a user selected tutel file.",
+            "body": {
+              "type": "tutel",
+              "name": "Launch",
+              "request": "launch",
+              "program": "^\"\\${workspaceFolder}/\\${command:AskForProgramName}\"",
+              "stopOnEntry": true
+            }
+          }
+        ],
+        "variables": {
+          "AskForProgramName": "extension.tutel.getProgramName"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "install": "python -m ensurepip --upgrade && python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple Tutel --upgrade"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^16.18.11",
+    "@types/path-browserify": "^1.0.0",
+    "@types/vscode": "^1.74.0",
+    "@types/vscode-webview": "^1.57.1",
+    "@types/ws": "^8.5.5",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "@vscode/debugadapter": "^1.58.0",
+    "@vscode/debugadapter-testsupport": "^1.58.0",
+    "@vscode/test-electron": "^2.1.5",
+    "await-notify": "^1.0.1",
+    "base64-js": "^1.5.1",
+    "esbuild": "^0.16.16",
+    "eslint": "^8.31.0",
+    "events": "^3.3.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.2.0",
+    "path-browserify": "^1.0.1",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.4",
+    "url": "^0.11.0",
+    "vsce": "^2.15.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "queue-typescript": "^1.0.1",
+    "tempfile": "^5.0.0",
+    "ws": "^8.13.0"
+  }
+}
