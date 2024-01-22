@@ -1,0 +1,220 @@
+{
+  "True": {
+    "prefix": "true",
+    "body": [
+      "true"
+    ]
+  },
+  "False": {
+    "prefix": "false",
+    "body": [
+      "false"
+    ]
+  },
+  "Null": {
+    "prefix": "null",
+    "body": [
+      "null"
+    ]
+  },
+  "Print builtin": {
+    "prefix": "print",
+    "body": [
+      "print($1);"
+    ],
+    "description": "Log output to console"
+  },
+  "Input builtin": {
+    "prefix": "input",
+    "body": [
+      "input($1);"
+    ],
+    "description": "Read from standard input"
+  },
+  "Sleep builtin": {
+    "prefix": "sleep",
+    "body": [
+      "sleep($1);"
+    ],
+    "description": "Sleep for given amount of seconds"
+  },
+  "Type builtin": {
+    "prefix": "sleep",
+    "body": [
+      "sleep($1);"
+    ],
+    "description": "Sleep for given amount of seconds"
+  },
+  "Hex builtin": {
+    "prefix": "hex",
+    "body": [
+      "hex($1);"
+    ],
+    "description": "Convert to hexadecimal"
+  },
+  "Min builtin": {
+    "prefix": "min",
+    "body": [
+      "min($1);"
+    ],
+    "description": "Get minimum value"
+  },
+  "Max builtin": {
+    "prefix": "max",
+    "body": [
+      "max($1);"
+    ],
+    "description": "Get maximum value"
+  },
+  "Abs builtin": {
+    "prefix": "abs",
+    "body": [
+      "abs($1);"
+    ],
+    "description": "Get absolute value"
+  },
+  "Range builtin 1": {
+    "prefix": "range",
+    "body": [
+      "range(${1:stop});"
+    ],
+    "description": "Return range object"
+  },
+  "Range builtin 2": {
+    "prefix": "range",
+    "body": [
+      "range(${1:start}, ${2:stop});"
+    ],
+    "description": "Return range object"
+  },
+  "Range builtin 3": {
+    "prefix": "range",
+    "body": [
+      "range(${1:start}, ${2:stop}, ${3:step});"
+    ],
+    "description": "Return range object"
+  },
+  "Len builtin": {
+    "prefix": "len",
+    "body": [
+      "len($1);"
+    ],
+    "description": "Get length of array-like object"
+  },
+  "Pow builtin 1": {
+    "prefix": "pow",
+    "body": [
+      "pow(${1:base}, ${2:exp});"
+    ],
+    "description": "Calculate power"
+  },
+  "Pow builtin 2": {
+    "prefix": "pow",
+    "body": [
+      "pow(${1:base}, ${2:exp}, ${3:mod});"
+    ],
+    "description": "Calculate power"
+  },
+  "Str builtin": {
+    "prefix": "str",
+    "body": [
+      "str($1);"
+    ],
+    "description": "Cast to string"
+  },
+  "Int builtin": {
+    "prefix": "int",
+    "body": [
+      "int($1);"
+    ],
+    "description": "Cast to integer"
+  },
+  "Iterate with for loop": {
+    "prefix": "for",
+    "body": [
+      "for(${1:element} in ${2:iterable}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Iterate with while loop": {
+    "prefix": "while",
+    "body": [
+      "while(${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Conditional statement if": {
+    "prefix": "if",
+    "body": [
+      "if(${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Conditional statement elif": {
+    "prefix": "elif",
+    "body": [
+      "elif(${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Conditional statement else": {
+    "prefix": "else",
+    "body": [
+      "else {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "Return statement": {
+    "prefix": "return",
+    "body": [
+      "return $1;"
+    ]
+  },
+  "Turtle": {
+    "prefix": "Turtle",
+    "body": [
+      "Turtle()"
+    ],
+    "description": "Create new turtle object"
+  },
+  "Color": {
+    "prefix": "Color",
+    "body": [
+      "Color($1, $2, $3)"
+    ],
+    "description": "Create new color object"
+  },
+  "Position": {
+    "prefix": "Position",
+    "body": [
+      "Position($1, $2)"
+    ],
+    "description": "Create new position object"
+  },
+  "Set color": {
+    "prefix": ".set_color",
+    "body": [
+      ".set_color($1);"
+    ],
+    "description": "Set color of turtle"
+  },
+  "Set position": {
+    "prefix": ".set_position",
+    "body": [
+      ".set_position($1);"
+    ],
+    "description": "Set position of turtle"
+  },
+  "Set orientation": {
+    "prefix": ".set_orientation",
+    "body": [
+      ".set_orientation($1);"
+    ],
+    "description": "Set orientation of turtle"
+  }
+}

@@ -1,0 +1,134 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Tutel",
+    "scopeName": "source.tutel",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#builtins"
+        },
+        {
+            "include": "#functions"
+        },
+        {
+            "include": "#variables"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.tutel",
+                    "match": "#.*"
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.tutel",
+                    "match": "\\b[0-9]+\\b"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.tutel",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tutel",
+                            "match": "\\\\(.)"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.tutel",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.tutel",
+                            "match": "\\\\(.)"
+                        }
+                    ]
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.tutel",
+                    "match": "\\b(if|elif|else|for|while|return|in|not|and|or)\\b"
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.assignment.tutel",
+                    "match": "(=|\\+=|-=|\\*=|/=|%=)"
+                },
+                {
+                    "name": "keyword.operator.comparison.tutel",
+                    "match": "(==|!=|<=|<|>=|>|in)"
+                },
+                {
+                    "name": "keyword.operator.arithmetic.tutel",
+                    "match": "(\\+|-|\\*|/|//|%)"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    "match": "\\b(null|true|false|Turtle|Color|Position)\\b",
+                    "name": "constant.language.tutel"
+                }
+            ]
+        },
+        "builtins": {
+            "patterns": [
+                {
+                    "match": "(?x)\\b(hex|input|\n\t\t\t\tlen|max|min|pow|print|range|type)\\b",
+                    "name": "support.function.builtin.tutel"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "entity.name.function.tutel",
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b(?=\\()"
+                }
+            ]
+        },
+        "variables": {
+            "patterns": [
+                {
+                    "name": "variable.parameter.tutel",
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*"
+                }
+            ]
+        }
+    }
+}

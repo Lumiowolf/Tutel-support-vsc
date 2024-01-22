@@ -16,7 +16,8 @@
     "Programming Languages",
     "Snippets",
     "Other",
-    "Visualization"
+    "Visualization",
+    "Debuggers"
   ],
   "activationEvents": [
     "onCommand:tutel.start",
