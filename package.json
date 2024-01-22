@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab-stud.elka.pw.edu.pl/sosnowski-inz/tutel-support.git"
+    "url": "https://github.com/Lumiowolf/Tutel-support-vsc.git"
   },
   "engines": {
     "vscode": "^1.74.0"

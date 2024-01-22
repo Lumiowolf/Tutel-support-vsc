@@ -216,5 +216,26 @@
       ".set_orientation($1);"
     ],
     "description": "Set orientation of turtle"
+  },
+  "Go forward": {
+    "prefix": ".forward",
+    "body": [
+      ".forward($1);"
+    ],
+    "description": "Move turtle forward"
+  },
+  "Turn left": {
+    "prefix": ".turn_left",
+    "body": [
+      ".turn_left();"
+    ],
+    "description": "Turn turtle left"
+  },
+  "Turn right": {
+    "prefix": ".turn_right",
+    "body": [
+      ".turn_right();"
+    ],
+    "description": "Turn turtle right"
   }
 }
