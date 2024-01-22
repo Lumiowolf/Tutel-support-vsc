@@ -24,5 +24,5 @@ Dokumentacja w edytorze: Szybki dostęp do dokumentacji języka Tutel bezpośred
 ## Użycie
 Po zainstalowaniu rozszerzenia, każdy plik z rozszerzeniem .tut zostanie automatycznie rozpoznany jako kod w języku Tutel. Rozszerzenie aktywuje się przy otwieraniu takiego pliku, oferując wszystkie swoje funkcje.
 
-Licencja
+## Licencja
 Ten projekt jest udostępniony na licencji MIT.
