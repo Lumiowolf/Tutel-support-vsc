@@ -43,7 +43,6 @@ export class TutelDebugSession extends DebugSession {
 	 */
 	public constructor(fileAccessor: FileAccessor) {
 		super();
-		// super("tutel-debug.txt");
 
 		// this debugger uses one-based lines and columns
 		this.setDebuggerLinesStartAt1(true);
@@ -51,7 +50,7 @@ export class TutelDebugSession extends DebugSession {
 
 		if (vscode.window.activeTextEditor?.document.isUntitled) {
 			vscode.window.showErrorMessage("The active file needs to be saved before it can be run");
-			// TODO Terminate debugging
+			this.sendEvent(new TerminatedEvent());
 		}
 
 		const bufferUri = vscode.Uri.joinPath(extensionUri, 'media', 'buffer');
@@ -76,32 +75,10 @@ export class TutelDebugSession extends DebugSession {
 			} else {
 				this.sendEvent(new StoppedEvent('exception', TutelDebugSession.threadID));
 			}
-			// this._runtime.terminate();
 		});
 		this._runtime.on('breakpointValidated', (bp: IRuntimeBreakpoint) => {
 			this.sendEvent(new BreakpointEvent('changed', { verified: bp.verified, id: bp.id } as DebugProtocol.Breakpoint));
 		});
-		// this._runtime.on('output', (type, text, filePath, line, column) => {
-
-		// 	let category: string;
-		// 	switch (type) {
-		// 		case 'prio': category = 'important'; break;
-		// 		case 'out': category = 'stdout'; break;
-		// 		case 'err': category = 'stderr'; break;
-		// 		default: category = 'console'; break;
-		// 	}
-		// 	const e: DebugProtocol.OutputEvent = new OutputEvent(`${text}\n`, category);
-
-		// 	if (text === 'start' || text === 'startCollapsed' || text === 'end') {
-		// 		e.body.group = text;
-		// 		e.body.output = `group-${text}\n`;
-		// 	}
-
-		// 	e.body.source = this.createSource(filePath);
-		// 	e.body.line = this.convertDebuggerLineToClient(line);
-		// 	e.body.column = this.convertDebuggerColumnToClient(column);
-		// 	this.sendEvent(e);
-		// });
 		this._runtime.on('end', () => {
 			this.sendEvent(new TerminatedEvent());
 		});
@@ -112,11 +89,6 @@ export class TutelDebugSession extends DebugSession {
 	 * to interrogate the features the debug adapter provides.
 	 */
 	protected async initializeRequest(response: DebugProtocol.InitializeResponse, args: DebugProtocol.InitializeRequestArguments): Promise<void> {
-		// if (args.supportsRunInTerminalRequest) {
-		// 	this._runInTreminal = true;
-		// 	this._runtime.supportsRunInTerminal = this._runInTreminal;
-		// }
-
 		// build and return the capabilities of this debug adapter:
 		response.body = response.body || {};
 
@@ -181,11 +153,6 @@ export class TutelDebugSession extends DebugSession {
 		const bps = args.breakpoints || [];
 
 		this._runtime.clearAllBreakpoints(path);
-		// clientLines.forEach(l => {
-		// 	if (!this._runtime.checkBreakpoint(path, this.convertClientLineToDebugger(l))) {
-		// 		this._runtime.clearBreakpoint(path, l);
-		// 	}
-		// });
 
 		const actualBreakpoints0 = bps.map(async bp => {
 			const { verified, line, id } = await this._runtime.setBreakPoint(
@@ -212,25 +179,10 @@ export class TutelDebugSession extends DebugSession {
 		this._runtime.pause();
 	}
 
-	protected exceptionInfoRequest(response: DebugProtocol.ExceptionInfoResponse, args: DebugProtocol.ExceptionInfoArguments) {
-		response.body = {
-			exceptionId: 'Exception ID',
-			description: 'This is a descriptive description of the exception.',
-			breakMode: 'always',
-			details: {
-				message: 'Message contained in the exception.',
-				typeName: 'Short type name of the exception object',
-				stackTrace: 'stack frame 1\nstack frame 2',
-			}
-		};
-		this.sendResponse(response);
-	}
-
 	protected threadsRequest(response: DebugProtocol.ThreadsResponse): void {
 		response.body = {
 			threads: [
 				new Thread(TutelDebugSession.threadID, "thread 1"),
-				// new Thread(TutelDebugSession.threadID + 1, "thread 2"),
 			]
 		};
 		this.sendResponse(response);
@@ -248,7 +200,6 @@ export class TutelDebugSession extends DebugSession {
 				const sf: DebugProtocol.StackFrame = new StackFrame(
 					f.index,
 					f.name,
-					// this.createSource("d:\\Studia\\Praca_inz\\sampleWorkspace\\test.tut"),
 					this.createSource(f.file),
 					this.convertDebuggerLineToClient(f.line),
 					this.convertDebuggerColumnToClient(1)

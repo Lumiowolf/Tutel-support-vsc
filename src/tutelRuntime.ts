@@ -220,16 +220,6 @@ export class TutelRuntime extends EventEmitter {
 			bps = new Array<IRuntimeBreakpoint>();
 			this.breakPoints.set(path, bps);
 		}
-		// let bp: IRuntimeBreakpoint | undefined = undefined;
-		// for (const _bp of bps) {
-		// 	if (_bp.line === line) {
-		// 		bp = _bp;
-		// 		break;
-		// 	}
-		// }
-		// if (bp) {
-		// 	return bp;
-		// }
 		const newBp: IRuntimeBreakpoint = { verified: false, line, id: this.breakpointId++, condition: condition };
 		bps.push(newBp);
 
